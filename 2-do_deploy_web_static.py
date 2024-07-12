@@ -6,7 +6,7 @@ Module to deploy an archive to web servers using Fabric.
 from fabric.api import put, run, env
 from os.path import exists
 
-env.hosts = ['xx-web-01', 'xx-web-02']
+env.hosts = ['54.84.246.32', '52.91.154.11']
 
 
 def do_deploy(archive_path):
