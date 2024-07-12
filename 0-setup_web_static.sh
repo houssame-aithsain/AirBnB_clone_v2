@@ -6,13 +6,7 @@ sudo apt-get -y update
 sudo apt-get -y upgrade
 
 # Check if Nginx is installed, install if not
-if ! command -v nginx &> /dev/null
-then
-    sudo apt-get -y install nginx
-    echo "Nginx installed"
-else
-    echo "Nginx is already installed"
-fi
+sudo apt-get -y install nginx
 
 # Create directories for the web_static deployment
 sudo mkdir -p /data/web_static/releases/test /data/web_static/shared
@@ -30,6 +24,4 @@ sudo chown -hR ubuntu:ubuntu /data/
 sudo sed -i '38i\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n' /etc/nginx/sites-available/default
 
 # Reload Nginx to apply the configuration changes
-sudo systemctl reload nginx || sudo service nginx reload
-
-echo "Web static setup completed."
+sudo service nginx start
