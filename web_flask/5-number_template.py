@@ -40,15 +40,11 @@ def c_text(text):
     return "C " + text.replace('_', ' ')
 
 
-@app.route('/python/', defaults={'text': 'is cool'}, strict_slashes=False)
+@app.route('/python', strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
-def python_text(text):
-    """
-    Displays 'Python ' followed by the value of the text variable.
-    Replaces underscores in the text variable with spaces.
-    The default value of text is 'is cool'.
-    """
-    return "Python " + text.replace('_', ' ')
+def python_text(text='is cool'):
+    """prints Python followed by text"""
+    return 'Python {}'.format(text.replace('_', ' '))
 
 
 @app.route('/number/<int:n>', strict_slashes=False)
