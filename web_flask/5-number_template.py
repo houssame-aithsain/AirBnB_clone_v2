@@ -1,7 +1,6 @@
 #!/usr/bin/pyhton3
-from flask import Flask, render_template
 """Initialization of web_flask project"""
-
+from flask import Flask, render_template
 app = Flask(__name__)
 
 
@@ -17,16 +16,18 @@ def hbnb():
     return "HBNB!"
 
 
-@app.route('/C/<text>',strict_slashes=False)
+@app.route('/C/<text>', strict_slashes=False)
 def text(text):
     """route that display C with the cvalue of text variable"""
-    return "C " + text.replace('_',' ')
+    return "C " + text.replace('_', ' ')
 
 
 @app.route('/python', strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
 def python_text(text="is cool"):
-    """route that display's pyhton followed bt the value of the text variable"""
+    """
+    route that display's pyhton followed bt the value of the text variable
+    """
     return "Python "+text.replace("_", " ")
 
 
@@ -38,7 +39,10 @@ def number(n):
 
 @app.route('/number_template/<int:n>')
 def template(n):
-    """ display a HTML page only if n is an integer: H1 tag: “Number: n” inside the tag BODY"""
+    """
+    display a HTML page only if n is an integer:
+    H1 tag: “Number: n” inside the tag BODY
+    """
     parity_no = 'even' if n % 2 == 0 else 'odd'
     return render_template('5-number.html', n=n, parity=parity_no)
 
