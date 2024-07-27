@@ -4,7 +4,8 @@ A simple Flask web application that displays:
 - 'Hello HBNB!' on the root route
 - 'HBNB' on the /hbnb route
 - 'C ' followed by the value of the text variable on the /c/<text> route
-- 'Python ' followed by the value of the text variable on the /python/<text> route
+- 'Python ' followed by the value of the text variable on the /python/<text>
+    route
   (with a default value of 'is cool')
 """
 from flask import Flask
