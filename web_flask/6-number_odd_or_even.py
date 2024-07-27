@@ -10,6 +10,8 @@ A simple Flask web application that displays:
 - 'n is a number' only if n is an integer on the /number/<n> route
 - A HTML page with 'Number: n' inside an H1 tag only if n is an integer on the
     /number_template/<n> route
+- A HTML page with 'Number: n is even|odd' inside an H1 tag only if n is an
+    integer on the /number_odd_or_even/<n> route
 """
 from flask import Flask, render_template
 app = Flask(__name__)
@@ -65,6 +67,16 @@ def number_template(n):
     Displays a HTML page with 'Number: n' inside an H1 tag only.
     """
     return render_template('5-number.html', number=n)
+
+
+@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
+def number_odd_or_even(n):
+    """
+    Displays a HTML page with 'Number: n is even|odd' inside an H1 tag only.
+    """
+    odd_or_even = "even" if n % 2 == 0 else "odd"
+    return render_template('6-number_odd_or_even.html', number=n,
+                           odd_or_even=odd_or_even)
 
 
 if __name__ == "__main__":
