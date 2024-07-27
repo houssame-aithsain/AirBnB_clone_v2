@@ -1,34 +1,34 @@
 #!/usr/bin/python3
-""" holds class State"""
-import models
+"""State Module for HBNB project."""
 from models.base_model import BaseModel, Base
 from models.city import City
-from os import getenv
-import sqlalchemy
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+import models
 
 
 class State(BaseModel, Base):
-    """Representation of state """
-    if models.storage_t == "db":
-        __tablename__ = 'states'
-        name = Column(String(128), nullable=False)
-        cities = relationship("City", backref="state")
+    """State class."""
+
+    __tablename__ = "states"
+    name = Column(String(128), nullable=False)
+    # if DBStorage is used, the relationship between State and City will be
+    # defined as state.cities and city.state
+    # if FileStorage is used, the relationship between State and City will be
+    # defined as state.cities and city.state_id
+    if models.storage_type == "db":
+        cities = relationship("City", backref="state", cascade="all, delete")
     else:
-        name = ""
-
-    def __init__(self, *args, **kwargs):
-        """initializes state"""
-        super().__init__(*args, **kwargs)
-
-    if models.storage_t != "db":
         @property
         def cities(self):
-            """getter for list of city instances related to the state"""
-            city_list = []
-            all_cities = models.storage.all(City)
-            for city in all_cities.values():
-                if city.state_id == self.id:
-                    city_list.append(city)
-            return city_list
+            """Getter attribute in case of file storage."""
+            cities = models.storage.all(City)
+            return [city for city in cities.values()
+                    if city.state_id == self.id]
+
+    def __init__(self, *args, **kwargs):
+        """Init method."""
+        filtered_kwargs = {k: v for k, v in kwargs.items()
+                           if hasattr(self, k) or k == "id"}
+        super().__init__(*args, **filtered_kwargs)
+        self.name = kwargs.get("name", None)
