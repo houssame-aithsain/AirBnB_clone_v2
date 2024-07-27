@@ -8,8 +8,10 @@ A simple Flask web application that displays:
     route
   (with a default value of 'is cool')
 - 'n is a number' only if n is an integer on the /number/<n> route
+- A HTML page with 'Number: n' inside an H1 tag only if n is an integer on the
+    /number_template/<n> route
 """
-from flask import Flask
+from flask import Flask, render_template
 app = Flask(__name__)
 
 
@@ -55,6 +57,14 @@ def number(n):
     Displays 'n is a number' only if n is an integer.
     """
     return f"{n} is a number"
+
+
+@app.route('/number_template/<int:n>', strict_slashes=False)
+def number_template(n):
+    """
+    Displays a HTML page with 'Number: n' inside an H1 tag only.
+    """
+    return render_template('5-number.html', number=n)
 
 
 if __name__ == "__main__":
